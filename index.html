@@ -29,7 +29,7 @@
 <section id="setupView">
 <div class="hero"><div class="eyebrow">Big brain energy • Good vibes • Fair play</div><h1>READY, SET, <span>QUIZ!</span></h1><p>A fun quiz for everyone! Type any topic and AI will prepare fresh questions for it. Play Solo Challenge or bring your team, learn from every answer, and beat your best score.</p></div>
 <div class="panel"><h2 class="section-title">① Choose your game mode</h2><div class="grid"><button class="mode selected" data-mode="team"><span class="emoji">🏆</span><strong>Team Showdown</strong><small>Play with 2–8 teams in a mega battle!</small></button><button class="mode" data-mode="solo"><span class="emoji">🧠</span><strong>Solo Challenge</strong><small>Play by yourself with topic-based questions, instant explanations, and your own final score.</small></button></div></div>
-<div class="panel"><h2 class="section-title">② Pick a topic</h2><div class="fields"><div class="field"><label for="topic">Quiz topic</label><input id="topic" type="text" maxlength="100" value="General Knowledge" placeholder="e.g., Indian Constitution, football, space"><small>Type any topic. The quiz prepares questions while the spinner is shown.</small></div><div class="field"><label for="level">Question level</label><select id="level"><option value="easy">🟢 Easy</option><option value="moderate" selected>🟡 Moderate</option><option value="tough">🔴 Tough</option></select><small>Choose the challenge level for your round.</small></div><div class="field"><label for="count">Number of questions (max 100)</label><input id="count" type="number" min="1" max="100" value="10"><small id="countHelp">AI can prepare questions for any topic when the server is connected.</small></div></div><div class="notice">💡 Choose any topic, difficulty, and question count. AI prepares questions about your exact topic. An internet connection and the Quiz Arena server are required.</div></div>
+<div class="panel"><h2 class="section-title">② Pick a topic</h2><div class="fields"><div class="field"><label for="topic">Quiz topic</label><input id="topic" type="text" maxlength="100" value="General Knowledge" placeholder="e.g., Indian Constitution, football, space"><small>Type any topic. The quiz prepares questions while the spinner is shown.</small></div><div class="field"><label for="level">Question level</label><select id="level"><option value="easy">🟢 Easy</option><option value="moderate" selected>🟡 Moderate</option><option value="tough">🔴 Tough</option></select><small>Choose the challenge level for your round.</small></div><div class="field"><label for="count">Number of questions (max 20)</label><input id="count" type="number" min="1" max="20" value="10"><small id="countHelp">AI can prepare questions for any topic when the server is connected.</small></div></div><div class="notice">💡 Choose any topic, difficulty, and question count. AI prepares questions about your exact topic. An internet connection and the Quiz Arena server are required.</div></div>
 <div class="panel" id="teamsPanel"><h2 class="section-title">③ Build your teams</h2><div class="fields"><div class="field"><label for="teamCount">Number of teams (2–8)</label><select id="teamCount"><option>2</option><option>3</option><option>4</option><option selected>5</option><option>6</option><option>7</option><option>8</option></select></div><div class="field"><label for="turnStyle">Team turn style</label><select id="turnStyle"><option value="round">Take turns (round-robin)</option><option value="buzz">Open buzzer (first to answer)</option></select></div></div><div id="teamNames" class="team-list"></div><div class="muted" style="margin-top:10px">Teams answer one at a time. Correct answer = 10 points. Wrong answer = 0 points.</div></div>
 <div class="actions"><button class="primary" id="startGame">🚀 START THE GAME</button></div><div id="setupMessage" class="notice hidden" role="status"></div>
 </section>
@@ -123,13 +123,10 @@ function refreshTeams(){let n=+$('teamCount').value;$('teamNames').innerHTML=Arr
 $('teamCount').addEventListener('change',refreshTeams);refreshTeams();
 function showSetup(msg){$('setupMessage').className='notice';$('setupMessage').textContent=msg;$('setupMessage').classList.remove('hidden')}
 function shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
-function updateQuestionHelp(){
-  const topic=$('topic').value;
-  const pool=banks[topic]||[];
-  $('countHelp').textContent=topic==='custom'?'Choose up to 100 questions. Get a question pack from ChatGPT and paste it below.':`${pool.length} question(s) available for this topic. Choose ${pool.length} or fewer for this round.`;
-}
-$('topic').addEventListener('change',()=>{updateQuestionHelp();const custom=$('topic').value==='custom';$('customTopicField').classList.toggle('hidden',!custom);$('customQuestionsField').classList.toggle('hidden',!custom);});
-$('askChatGPT').addEventListener('click',()=>{const topic=$('customTopic').value.trim();if(!topic){showSetup('Please type your topic first.');$('customTopic').focus();return;}const count=Math.max(1,Math.min(100,Number($('count').value)||10));const level=$('level').value;const prompt=`Create ${count} multiple-choice quiz questions about: ${topic}. Difficulty: ${level}. Return ONLY valid JSON, no markdown, in this exact format: [{"q":"Question text","opts":["Option A","Option B","Option C","Option D"],"correct":0,"explain":"Short simple explanation"}]. The correct value must be a zero-based number 0, 1, 2, or 3. Ensure each question has exactly four options and one correct answer. Make the questions accurate and age-appropriate.`;window.open('https://chatgpt.com/?q='+encodeURIComponent(prompt),'_blank');});
+function updateQuestionHelp(){ $('countHelp').textContent='AI will generate fresh questions for the topic you enter when the server is connected.'; }
+$('topic').addEventListener('input',()=>{ $('countHelp').textContent='AI will generate fresh questions for the topic you enter when the server is connected.'; });
+// Questions are generated by the secure server; no copy/paste is required.
+
 updateQuestionHelp();
 $('startGame').addEventListener('click',()=>{
   const button=$('startGame');
@@ -150,7 +147,7 @@ $('startGame').addEventListener('click',()=>{
       const topic=$('topic').value;
       const count=Number($('count').value);
       const level=$('level').value;
-      if(!Number.isInteger(count)||count<1||count>100){
+      if(!Number.isInteger(count)||count<1||count>20){
         $('preparingOverlay').classList.add('hidden');
         showSetup('❌ Quiz not started: please choose a whole number from 1 to 100.');
         return;
@@ -218,7 +215,7 @@ freshStart.addEventListener('click', async ()=>{
  const count=Number($('count').value);
  const level=$('level').value;
  if(!topic){showSetup('❌ Type any topic first (for example, robotics, football, or Indian history).');$('topic').focus();return;}
- if(!Number.isInteger(count)||count<1||count>100){showSetup('❌ Choose a whole number from 1 to 100.');$('count').focus();return;}
+ if(!Number.isInteger(count)||count<1||count>20){showSetup('❌ Choose a whole number from 1 to 20.');$('count').focus();return;}
  freshStart.disabled=true;freshStart.innerHTML='<span class="loading-dot"></span> PREPARING QUESTIONS…';
  $('setupMessage').className='notice status-loading';$('setupMessage').innerHTML='<span class="loading-dot"></span><strong>AI is preparing your quiz…</strong><br>Questions will match your chosen topic.';$('setupMessage').classList.remove('hidden');
  $('preparingOverlay').classList.remove('hidden');$('preparingOverlay').classList.remove('prep-failed');
