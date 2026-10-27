@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#10142b">
+<title>Quiz Arena — Play to Win!</title>
+<style>
+:root{--bg:#10172d;--panel:#192642;--panel2:#243657;--ink:#f7fbff;--muted:#bdcbe0;--pink:#8b7bff;--cyan:#36e0d0;--yellow:#ffcb55;--green:#72e6a6;--red:#ff7777}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 12% 0%,#263d66 0,transparent 38%),radial-gradient(ellipse at 92% 12%,#3c285f 0,transparent 32%),linear-gradient(160deg,#10172d,#10142b 70%);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:14px;padding:12px 16px;font-weight:800;transition:transform .15s,filter .15s}button:hover{filter:brightness(1.08);transform:translateY(-1px)}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}.primary{background:linear-gradient(135deg,#7567ff,#16bdb4);color:#fff}.secondary{background:var(--panel2);color:var(--ink);border:1px solid #414b7c}.good{background:var(--green);color:#12233a}.quiet{background:transparent;color:var(--muted);border:1px solid #414b7c}.wrap{max-width:1050px;margin:auto;padding:22px 16px 50px}.brand{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px}.logo{display:flex;align-items:center;gap:12px;font-weight:1000;font-size:clamp(1.2rem,4vw,1.8rem);letter-spacing:.3px}.logo-mark{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,#36e0d0,#8b7bff,#ffcb55);font-size:26px;box-shadow:0 8px 25px #4de5e033}.pill{background:#ffffff12;border:1px solid #ffffff22;border-radius:999px;padding:8px 12px;color:var(--muted);font-size:.85rem}.hero{text-align:center;padding:25px 8px 28px}.eyebrow{color:var(--cyan);font-weight:900;text-transform:uppercase;letter-spacing:2px;font-size:.78rem}.hero h1{font-size:clamp(2rem,7vw,4.4rem);line-height:1.04;margin:10px 0 14px;letter-spacing:-1.5px}.hero h1 span{color:var(--yellow)}.hero p{color:var(--muted);max-width:620px;margin:0 auto;line-height:1.6}.panel{background:linear-gradient(160deg,#20274b,#191f3e);border:1px solid #ffffff19;border-radius:24px;padding:clamp(16px,4vw,26px);box-shadow:0 18px 50px #0002;margin-bottom:18px}.section-title{font-size:1.1rem;font-weight:900;margin:0 0 14px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.mode{background:#ffffff08;border:2px solid #ffffff18;border-radius:18px;padding:17px;text-align:left;color:var(--ink);min-height:112px}.mode.selected{border-color:var(--cyan);background:#4de5e014;box-shadow:0 0 0 3px #4de5e00b}.mode .emoji{font-size:1.7rem;display:block;margin-bottom:8px}.mode strong{display:block;font-size:1rem}.mode small{color:var(--muted);display:block;margin-top:5px;line-height:1.4}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field{display:flex;flex-direction:column;gap:7px}.field label{font-weight:800;font-size:.9rem}.field input,.field select,.field textarea{width:100%;background:#101630;color:var(--ink);border:1px solid #414b7c;border-radius:12px;padding:12px}.field textarea{min-height:90px;resize:vertical}.field small,.muted{color:var(--muted);font-size:.84rem;line-height:1.45}.full{grid-column:1/-1}.team-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.team-chip{border:1px solid #4c5688;background:#ffffff0a;border-radius:999px;padding:7px 11px;font-size:.86rem}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.actions button{flex:1;min-width:150px}.notice{padding:11px 13px;background:#ffd16612;border:1px solid #ffd16644;border-radius:12px;color:#ffe5a2;font-size:.86rem;line-height:1.5;margin-top:12px}.loading-dot{display:inline-block;width:13px;height:13px;border:2px solid #ffe5a2;border-right-color:transparent;border-radius:50%;vertical-align:-2px;margin-right:7px;animation:spin .7s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.notice.status-loading{background:#36e0d014;border-color:#36e0d066;color:#c9fff8}.notice.status-success{background:#72e6a612;border-color:#72e6a655;color:#baffd5}.hidden{display:none!important}.question-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.progress{height:9px;background:#0d1229;border-radius:999px;overflow:hidden;margin:15px 0 22px}.progress div{height:100%;width:0;background:linear-gradient(90deg,#36e0d0,#8b7bff,#ffcb55);transition:width .3s}.question-number{color:var(--cyan);font-weight:900;font-size:.88rem}.question-text{font-size:clamp(1.35rem,4vw,2rem);font-weight:900;line-height:1.3;margin:12px 0 22px}.options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.option{background:#ffffff08;border:2px solid #3b456f;color:var(--ink);text-align:left;min-height:65px;display:flex;align-items:center;gap:12px}.option .letter{background:#343d69;border-radius:10px;min-width:34px;height:34px;display:grid;place-items:center;font-weight:900}.option.correct{border-color:var(--green);background:#75f0a41a}.option.wrong{border-color:var(--red);background:#ff77771a}.option:disabled{cursor:default;transform:none}.feedback{margin-top:16px;padding:13px 15px;border-radius:14px;background:#ffffff0a;color:var(--muted);line-height:1.5}.scoreboard{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.scorebox{flex:1;min-width:120px;background:#ffffff08;border:1px solid #ffffff16;border-radius:14px;padding:12px}.scorebox strong{display:block;font-size:1.3rem}.scorebox span{font-size:.8rem;color:var(--muted)}.result{text-align:center;padding:22px 0}.trophy{font-size:5rem;animation:bounce 1s infinite alternate;display:block}@keyframes bounce{to{transform:translateY(-9px) rotate(4deg)}}.winner{font-size:clamp(1.8rem,6vw,3.1rem);font-weight:1000;color:var(--yellow);margin:10px 0}.rankrow{display:flex;align-items:center;gap:12px;background:#ffffff08;padding:12px 14px;border-radius:13px;margin-top:9px;text-align:left}.rankrow .rank{font-weight:1000;color:var(--yellow);font-size:1.2rem;width:30px}.rankrow .rankname{flex:1;font-weight:800}.rankrow .points{font-weight:900;color:var(--cyan)}.footer{text-align:center;color:#828caf;font-size:.8rem;padding:14px}.custom-help{background:#111831;border:1px dashed #4c5688;border-radius:14px;padding:14px;color:var(--muted);font-size:.85rem;line-height:1.5}.confetti{position:fixed;top:-20px;width:9px;height:14px;z-index:5;pointer-events:none;animation:fall 2.6s linear forwards}@keyframes fall{to{transform:translateY(110vh) rotate(700deg);opacity:.3}}@media(max-width:620px){.grid,.fields,.options{grid-template-columns:1fr}.hero{padding-top:10px}.brand{margin-bottom:12px}.panel{border-radius:19px}.actions button{min-width:100%}.full{grid-column:auto}}
+
+/* Inclusive, playful arcade polish: bold colours, clear focus and friendly motion. */
+.logo-mark{box-shadow:0 8px 28px #36e0d044;transform:rotate(-4deg)}
+.panel{background:linear-gradient(145deg,#1b2b49eF,#171f3aeF);backdrop-filter:blur(8px)}
+.mode{transition:transform .18s,border-color .18s,background .18s,box-shadow .18s}
+.mode:hover{transform:translateY(-3px);border-color:#8b7bff;box-shadow:0 12px 24px #050a1c55}
+.mode.selected{border-color:var(--cyan);background:linear-gradient(135deg,#36e0d014,#8b7bff12)}
+.option:hover:not(:disabled){border-color:var(--cyan);background:#36e0d012}
+.primary{box-shadow:0 7px 18px #7567ff30}
+.pill{backdrop-filter:blur(8px)}
+.hero h1 span{background:linear-gradient(90deg,#ffcb55,#36e0d0,#a99dff);-webkit-background-clip:text;background-clip:text;color:transparent}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+/* Always-visible start feedback, especially on small phone screens. */
+#preparingOverlay{position:fixed;inset:0;z-index:9999;background:#090d20eF;display:flex;align-items:center;justify-content:center;padding:22px;backdrop-filter:blur(8px)}
+#preparingOverlay.hidden{display:none!important}.prep-card{width:min(440px,100%);text-align:center;padding:28px 22px;border-radius:24px;background:linear-gradient(145deg,#202d55,#261d4b);border:1px solid #36e0d077;box-shadow:0 20px 80px #0008}.prep-spinner{width:54px;height:54px;border:5px solid #ffffff20;border-top-color:#36e0d0;border-right-color:#8b7bff;border-radius:50%;margin:0 auto 18px;animation:spin .8s linear infinite}.prep-title{font-size:1.35rem;font-weight:950;color:#fff}.prep-copy{color:#cbd7f2;line-height:1.55;margin-top:8px}.prep-status{margin-top:16px;padding:10px;border-radius:12px;background:#36e0d016;color:#bafff5;font-weight:800}.prep-failed .prep-spinner{display:none}.prep-failed .prep-status{background:#ff77771c;color:#ffd1d1}
+</style></head>
+<body>
+<div id="preparingOverlay" class="hidden" role="status" aria-live="polite"><div class="prep-card"><div class="prep-spinner"></div><div class="prep-title" id="prepTitle">Preparing your quiz…</div><div class="prep-copy" id="prepCopy">Loading questions for your selected topic. Please wait.</div><div class="prep-status" id="prepStatus">⏳ Please wait…</div></div></div>
+<div class="wrap">
+<header class="brand"><div class="logo"><div class="logo-mark">⚡</div><div>QUIZ <span style="color:var(--cyan)">ARENA</span></div></div><div class="pill">🎮 Think fast. Play fair. Win big.</div></header>
+<section id="setupView">
+<div class="hero"><div class="eyebrow">Big brain energy • Good vibes • Fair play</div><h1>READY, SET, <span>QUIZ!</span></h1><p>A fun quiz for everyone! Type any topic and AI will prepare fresh questions for it. Play Solo Challenge or bring your team, learn from every answer, and beat your best score.</p></div>
+<div class="panel"><h2 class="section-title">① Choose your game mode</h2><div class="grid"><button class="mode selected" data-mode="team"><span class="emoji">🏆</span><strong>Team Showdown</strong><small>Play with 2–8 teams in a mega battle!</small></button><button class="mode" data-mode="solo"><span class="emoji">🧠</span><strong>Solo Challenge</strong><small>Play by yourself with topic-based questions, instant explanations, and your own final score.</small></button></div></div>
+<div class="panel"><h2 class="section-title">② Pick a topic</h2><div class="fields"><div class="field"><label for="topic">Quiz topic</label><input id="topic" type="text" maxlength="100" value="General Knowledge" placeholder="e.g., Indian Constitution, football, space"><small>Type any topic. The quiz prepares questions while the spinner is shown.</small></div><div class="field"><label for="level">Question level</label><select id="level"><option value="easy">🟢 Easy</option><option value="moderate" selected>🟡 Moderate</option><option value="tough">🔴 Tough</option></select><small>Choose the challenge level for your round.</small></div><div class="field"><label for="count">Number of questions (max 100)</label><input id="count" type="number" min="1" max="100" value="10"><small id="countHelp">AI can prepare questions for any topic when the server is connected.</small></div></div><div class="notice">💡 Choose any topic, difficulty, and question count. AI prepares questions about your exact topic. An internet connection and the Quiz Arena server are required.</div></div>
+<div class="panel" id="teamsPanel"><h2 class="section-title">③ Build your teams</h2><div class="fields"><div class="field"><label for="teamCount">Number of teams (2–8)</label><select id="teamCount"><option>2</option><option>3</option><option>4</option><option selected>5</option><option>6</option><option>7</option><option>8</option></select></div><div class="field"><label for="turnStyle">Team turn style</label><select id="turnStyle"><option value="round">Take turns (round-robin)</option><option value="buzz">Open buzzer (first to answer)</option></select></div></div><div id="teamNames" class="team-list"></div><div class="muted" style="margin-top:10px">Teams answer one at a time. Correct answer = 10 points. Wrong answer = 0 points.</div></div>
+<div class="actions"><button class="primary" id="startGame">🚀 START THE GAME</button></div><div id="setupMessage" class="notice hidden" role="status"></div>
+</section>
+<section id="gameView" class="hidden"><div class="panel"><div class="question-top"><span class="pill" id="gameTopic">🌟 General Knowledge</span><span class="question-number" id="questionNum">QUESTION 1 / 10</span></div><div class="progress"><div id="progressBar"></div></div><div class="question-top"><span class="pill" id="levelBadge">🟡 MODERATE</span><span class="pill" id="timer" aria-live="polite">⌛ 01:00</span></div><div class="scoreboard" id="scoreboard"></div><div class="question-text" id="questionText"></div><div class="options" id="options"></div><div id="feedback" class="feedback hidden" role="status"></div><div class="actions"><button class="primary hidden" id="nextQuestion">Next question ➜</button><button class="quiet" id="quitGame">✕ End game</button></div></div></section>
+<section id="resultView" class="hidden"><div class="panel"><div class="result"><span class="trophy" id="trophy">🏆</span><div class="eyebrow">THE ARENA CHAMPION</div><div class="winner" id="winnerName">Team A Wins!</div><p class="muted" id="winnerMessage">Amazing game!</p><div class="scoreboard" id="finalStats"></div></div><h2 class="section-title">🏅 Final leaderboard</h2><div id="leaderboard"></div><div class="actions"><button class="primary" id="playAgain">🔁 Play again</button><button class="secondary" id="newSetup">🎛️ Change settings</button></div></div></section>
+<div class="footer">QUIZ ARENA • Every mind belongs in the game. Play fair, learn together, celebrate every champion! 🎉</div></div>
+<script>
+const banks={
+general:[
+['Which planet is known as the Red Planet?',['Venus','Mars','Jupiter','Mercury'],1,'Mars looks reddish because of iron-rich dust on its surface.'],
+['How many days are there in a leap year?',['364','365','366','367'],2,'A leap year has 366 days.'],
+['Which is the largest ocean on Earth?',['Atlantic Ocean','Indian Ocean','Arctic Ocean','Pacific Ocean'],3,'The Pacific Ocean is the largest ocean on Earth.'],
+['What is the currency of Japan?',['Yen','Won','Rupee','Euro'],0,'Japan uses the yen.'],
+['Which animal is known as the ship of the desert?',['Horse','Camel','Elephant','Donkey'],1,'Camels are adapted to travel across dry desert regions.'],
+['How many sides does a hexagon have?',['Five','Six','Seven','Eight'],1,'A hexagon has six sides.'],
+['Which gas do humans need to breathe to survive?',['Oxygen','Helium','Hydrogen','Neon'],0,'Humans need oxygen for cellular respiration.'],
+['Which is the fastest land animal?',['Lion','Cheetah','Horse','Leopard'],1,'Cheetahs can run very fast over short distances.'],
+['How many colours are traditionally named in a rainbow?',['Five','Six','Seven','Eight'],2,'The traditional list names seven rainbow colours.'],
+['Which instrument measures temperature?',['Barometer','Thermometer','Compass','Ruler'],1,'A thermometer measures temperature.'] ],
+science:[
+['Which part of a plant usually absorbs water from soil?',['Flower','Roots','Fruit','Leaves'],1,'Roots take up water and minerals from the soil.'],
+['What is the chemical formula for water?',['CO₂','O₂','H₂O','NaCl'],2,'A water molecule has two hydrogen atoms and one oxygen atom.'],
+['Which force pulls objects toward Earth?',['Friction','Magnetism','Gravity','Electricity'],2,'Gravity attracts objects with mass toward one another.'],
+['Which organ pumps blood around the body?',['Lungs','Heart','Brain','Kidneys'],1,'The heart pumps blood through blood vessels.'],
+['What is the centre of an atom called?',['Nucleus','Cell wall','Core shell','Membrane'],0,'An atom has a nucleus containing protons and usually neutrons.'],
+['Which state of matter has a fixed shape and fixed volume?',['Gas','Liquid','Solid','Plasma only'],2,'A solid keeps its shape and volume under ordinary conditions.'],
+['Which gas do plants absorb for photosynthesis?',['Oxygen','Carbon dioxide','Nitrogen','Helium'],1,'Plants use carbon dioxide, water and light to make sugars.'],
+['Which planet is closest to the Sun?',['Earth','Venus','Mercury','Mars'],2,'Mercury is the closest planet to the Sun.'],
+['What is the boiling point of pure water at sea level?',['50°C','75°C','100°C','150°C'],2,'At standard atmospheric pressure, pure water boils at 100°C.'],
+['Which unit is used to measure electric current?',['Ampere','Watt','Volt','Metre'],0,'Electric current is measured in amperes.'] ],
+geography:[
+['What is the largest continent by area?',['Africa','Asia','Europe','South America'],1,'Asia is the largest continent by area.'],
+['Which imaginary line divides Earth into Northern and Southern Hemispheres?',['Prime Meridian','Equator','Tropic of Cancer','Arctic Circle'],1,'The Equator is at 0° latitude.'],
+['What is molten rock called while it is beneath Earth’s surface?',['Lava','Magma','Ash','Soil'],1,'Molten rock beneath the surface is called magma; at the surface it is lava.'],
+['Which is the highest mountain above sea level?',['K2','Kangchenjunga','Mount Everest','Makalu'],2,'Mount Everest is the highest mountain above sea level.'],
+['Which ocean lies to the east of Africa?',['Atlantic','Pacific','Indian','Arctic'],2,'The Indian Ocean borders Africa to the east.'],
+['What causes day and night?',['Earth’s rotation','Earth’s revolution','The Moon’s orbit','Ocean tides'],0,'Earth rotates on its axis roughly once every 24 hours.'],
+['Which layer is the outermost solid layer of Earth?',['Inner core','Outer core','Mantle','Crust'],3,'The crust is Earth’s thin outermost solid layer.'],
+['What does a map scale help us understand?',['Weather','Real distance','Population only','Elevation only'],1,'A map scale relates map distance to real-world distance.'],
+['Which is the smallest continent by area?',['Europe','Australia','Antarctica','South America'],1,'Australia is the smallest continent by area in the common seven-continent model.'],
+['What is the 0° longitude line called?',['Equator','International Date Line','Prime Meridian','Tropic of Capricorn'],2,'The Prime Meridian is the reference line for 0° longitude.'] ],
+history:[
+['In which year did India become independent?',['1945','1947','1950','1952'],1,'India became independent on 15 August 1947.'],
+['Who was the first Prime Minister of independent India?',['Sardar Patel','Jawaharlal Nehru','Rajendra Prasad','B. R. Ambedkar'],1,'Jawaharlal Nehru became India’s first Prime Minister.'],
+['The Revolt of 1857 began in which place?',['Delhi','Meerut','Kanpur','Lucknow'],1,'The uprising began at Meerut in May 1857 and spread to other places.'],
+['Which trading company established English trading power in India?',['Dutch East India Company','English East India Company','French West India Company','Portuguese Royal Company'],1,'The English East India Company was established in 1600.'],
+['Who is widely known as the Iron Man of India?',['Subhas Chandra Bose','Bhagat Singh','Sardar Vallabhbhai Patel','Bal Gangadhar Tilak'],2,'Sardar Vallabhbhai Patel is widely called the Iron Man of India.'],
+['Who led the Dandi March in 1930?',['Mahatma Gandhi','B. R. Ambedkar','Jawaharlal Nehru','Lala Lajpat Rai'],0,'Gandhi led the Salt March to challenge the British salt tax.'],
+['In which year did the Constitution of India come into effect?',['1947','1949','1950','1952'],2,'The Constitution came into effect on 26 January 1950.'],
+['Who was the first President of India?',['S. Radhakrishnan','Rajendra Prasad','Zakir Husain','V. V. Giri'],1,'Dr. Rajendra Prasad was India’s first President.'],
+['The Battle of Plassey took place in which year?',['1757','1764','1857','1707'],0,'The Battle of Plassey took place in 1757.'],
+['Who gave the slogan “Do or Die” during the freedom movement?',['Mahatma Gandhi','Bhagat Singh','Subhas Chandra Bose','Dadabhai Naoroji'],0,'Gandhi gave the “Do or Die” call during the Quit India Movement in 1942.'] ],
+environment:[
+['Which of these is a renewable source of energy?',['Coal','Petrol','Solar energy','Natural gas'],2,'Sunlight is naturally replenished and is a renewable energy source.'],
+['In a food chain, which organism usually makes its own food?',['Producer','Primary consumer','Secondary consumer','Decomposer only'],0,'Green plants are producers because they make food using sunlight.'],
+['What is the main energy source for most food chains?',['Moon','Sun','Wind','Soil'],1,'Sunlight powers photosynthesis, which supports most food chains.'],
+['Which gas is a major contributor to human-caused global warming?',['Carbon dioxide','Oxygen','Argon','Neon'],0,'Carbon dioxide from burning fossil fuels is a major greenhouse gas.'],
+['Which action helps reduce plastic waste?',['Using single-use bags more','Reusing a cloth bag','Littering outdoors','Burning plastic at home'],1,'Reusable bags reduce the need for single-use plastic bags.'],
+['Which organisms break down dead plants and animals?',['Producers','Decomposers','Herbivores only','Predators only'],1,'Fungi and many bacteria act as decomposers.'],
+['What does biodiversity mean?',['Only the number of trees','Variety of life','Amount of rainfall','Types of rocks'],1,'Biodiversity means the variety of living things in an area or on Earth.'],
+['Which is a natural ecosystem?',['A forest','A shopping mall','A factory','A classroom'],0,'A forest is an ecosystem formed mainly through natural processes.'],
+['What is the term for cutting down forests on a large scale?',['Afforestation','Deforestation','Pollination','Conservation'],1,'Deforestation means clearing or removing forests.'],
+['Which practice can help conserve water?',['Leaving taps running','Fixing leaking taps','Washing pavements daily with a hose','Dumping waste in rivers'],1,'Repairing leaks prevents avoidable water loss.'] ],
+english:[
+['Choose the correct question tag: “She is ready, ___?”',['is she?','isn’t she?','does she?','wasn’t she?'],1,'A positive statement with “is” usually takes the negative tag “isn’t she?”.'],
+['Choose the correct word: “They ___ to school every day.”',['go','goes','going','gone'],0,'Use “go” with the plural subject “they” in the simple present.'],
+['Choose the correct article: “He ate ___ apple.”',['a','an','the only','no article ever'],1,'“An” is used before a vowel sound, as in “apple”.'],
+['What is the past tense of “write”?',['Writed','Written','Wrote','Writing'],2,'The simple past of “write” is “wrote”.'],
+['Choose the correct question tag: “Nobody called, ___?”',['did they?','didn’t they?','did he?','wasn’t it?'],0,'“Nobody” has a negative meaning, so the tag is positive; “they” is commonly used.'],
+['Which word is an adjective in “The bright star shone”?',['star','shone','bright','the'],2,'“Bright” describes the star, so it is an adjective.'],
+['Choose the correct form: “I have ___ my homework.”',['do','did','done','doing'],2,'Present perfect uses have/has + past participle: “done”.'],
+['What is the plural of “child”?',['childs','children','childes','childrens'],1,'The irregular plural of “child” is “children”.'],
+['Choose the correct sentence.',['She don’t like tea.','She doesn’t likes tea.','She doesn’t like tea.','She not like tea.'],2,'After “doesn’t”, use the base verb “like”.'],
+['Choose the opposite of “ancient”.',['Old','Historic','Modern','Past'],2,'“Modern” means recent or present-day, the opposite of ancient.'] ],
+math:[
+['What is 12 × 8?',['86','96','108','88'],1,'12 × 8 = 96.'],
+['What is 25% of 200?',['25','40','50','75'],2,'25% is one quarter, and one quarter of 200 is 50.'],
+['What is the square of 9?',['18','72','81','99'],2,'9 × 9 = 81.'],
+['What is 3/4 expressed as a percentage?',['25%','50%','75%','80%'],2,'3 ÷ 4 = 0.75, which is 75%.'],
+['A triangle’s angles add up to how many degrees in Euclidean geometry?',['90°','180°','270°','360°'],1,'The interior angles of a triangle total 180°.'],
+['What is 144 ÷ 12?',['10','11','12','14'],2,'12 × 12 = 144, so 144 ÷ 12 = 12.'],
+['What is the perimeter of a square with side 5 cm?',['10 cm','15 cm','20 cm','25 cm'],2,'A square has four equal sides: 4 × 5 cm = 20 cm.'],
+['Solve: x + 7 = 15.',['6','7','8','9'],2,'Subtract 7 from both sides: x = 8.'],
+['Which number is prime?',['21','27','29','33'],2,'29 has exactly two positive factors: 1 and 29.'],
+['What is 2³?',['6','8','9','12'],1,'2³ means 2 × 2 × 2 = 8.'] ]};
+const labels={custom:'✨ Your topic',general:'🌟 General Knowledge',science:'🔬 Science',geography:'🌍 Geography',history:'📜 History',environment:'🌱 Environment',english:'✍️ English',math:'➗ Maths',};
+let mode='team',gameQs=[],teams=[],idx=0,answered=false,turn=0,gameTopic='general',gameActive=false,timerInterval=null,timeLeft=60;
+const $=id=>document.getElementById(id);
+document.querySelectorAll('.mode').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.mode;document.querySelectorAll('.mode').forEach(x=>x.classList.toggle('selected',x===b));$('teamsPanel').classList.toggle('hidden',mode==='solo')}));
+function refreshTeams(){let n=+$('teamCount').value;$('teamNames').innerHTML=Array.from({length:n},(_,i)=>`<span class="team-chip">${['🔴','🔵','🟢','🟣','🟠','🟡','⚫','⚪'][i]} Team ${String.fromCharCode(65+i)}</span>`).join('')}
+$('teamCount').addEventListener('change',refreshTeams);refreshTeams();
+function showSetup(msg){$('setupMessage').className='notice';$('setupMessage').textContent=msg;$('setupMessage').classList.remove('hidden')}
+function shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function updateQuestionHelp(){
+  const topic=$('topic').value;
+  const pool=banks[topic]||[];
+  $('countHelp').textContent=topic==='custom'?'Choose up to 100 questions. Get a question pack from ChatGPT and paste it below.':`${pool.length} question(s) available for this topic. Choose ${pool.length} or fewer for this round.`;
+}
+$('topic').addEventListener('change',()=>{updateQuestionHelp();const custom=$('topic').value==='custom';$('customTopicField').classList.toggle('hidden',!custom);$('customQuestionsField').classList.toggle('hidden',!custom);});
+$('askChatGPT').addEventListener('click',()=>{const topic=$('customTopic').value.trim();if(!topic){showSetup('Please type your topic first.');$('customTopic').focus();return;}const count=Math.max(1,Math.min(100,Number($('count').value)||10));const level=$('level').value;const prompt=`Create ${count} multiple-choice quiz questions about: ${topic}. Difficulty: ${level}. Return ONLY valid JSON, no markdown, in this exact format: [{"q":"Question text","opts":["Option A","Option B","Option C","Option D"],"correct":0,"explain":"Short simple explanation"}]. The correct value must be a zero-based number 0, 1, 2, or 3. Ensure each question has exactly four options and one correct answer. Make the questions accurate and age-appropriate.`;window.open('https://chatgpt.com/?q='+encodeURIComponent(prompt),'_blank');});
+updateQuestionHelp();
+$('startGame').addEventListener('click',()=>{
+  const button=$('startGame');
+  if(button.disabled)return;
+  button.disabled=true;
+  button.innerHTML='<span class="loading-dot"></span> PREPARING QUESTIONS…';
+  const msg=$('setupMessage');
+  msg.className='notice status-loading';
+  msg.innerHTML='<span class="loading-dot"></span><strong>Preparing your quiz…</strong><br>Loading questions for your selected topic and getting the game ready.';
+  $('preparingOverlay').classList.remove('hidden');
+  $('preparingOverlay').classList.remove('prep-failed');
+  $('prepTitle').textContent='Preparing your quiz…';
+  $('prepCopy').textContent=`Preparing ${$('topic').value==='custom'?($('customTopic').value.trim()||'your topic'):$('topic').selectedOptions[0].text} questions • ${$('level').selectedOptions[0].text} • ${$('count').value} question(s).`;
+  $('prepStatus').textContent='⏳ Step 1 of 2: checking your topic and question count…';
+  setTimeout(()=>{ $('prepStatus').textContent='🎯 Step 2 of 2: loading and selecting questions…'; },180);
+  setTimeout(()=>{
+    try{
+      const topic=$('topic').value;
+      const count=Number($('count').value);
+      const level=$('level').value;
+      if(!Number.isInteger(count)||count<1||count>100){
+        $('preparingOverlay').classList.add('hidden');
+        showSetup('❌ Quiz not started: please choose a whole number from 1 to 100.');
+        return;
+      }
+      let pool;
+      if(topic==='custom'){
+        const typedTopic=$('customTopic').value.trim();
+        if(!typedTopic){$('preparingOverlay').classList.add('hidden');showSetup('❌ Please type your own topic first.');return;}
+        let pasted;
+        try{pasted=JSON.parse($('customQuestions').value.trim());}catch(e){$('preparingOverlay').classList.add('hidden');showSetup('❌ Please paste the valid JSON question list from ChatGPT into the box. Tap “Get questions for my topic” if you need it.');return;}
+        if(!Array.isArray(pasted)||pasted.length===0||pasted.some(q=>!q||typeof q.q!=='string'||!Array.isArray(q.opts)||q.opts.length!==4||!Number.isInteger(q.correct)||q.correct<0||q.correct>3)){$('preparingOverlay').classList.add('hidden');showSetup('❌ The pasted question list format is not correct. Ask ChatGPT for the exact JSON format shown in the prompt.');return;}
+        pool=pasted.map(q=>({category:'custom',q:q.q,opts:q.opts.map(String),correct:q.correct,explain:String(q.explain||'Review the correct answer and explanation.')}));
+        labels.custom='✨ '+typedTopic;
+      }else{
+        pool=(banks[topic]||[]).map(x=>({category:topic,q:x[0],opts:x[1],correct:x[2],explain:x[3]}));
+      }
+      if(pool.length===0){
+        $('preparingOverlay').classList.add('hidden');
+        showSetup('❌ Quiz not started: there are no questions available for this topic yet. Please choose another topic.');
+        return;
+      }
+      if(count>pool.length){
+        $('preparingOverlay').classList.add('hidden');
+        showSetup(`❌ Quiz not started: this topic has only ${pool.length} available question(s), but you selected ${count}. Change the number to ${pool.length} or fewer, or add more questions.`);
+        return;
+      }
+      gameQs=shuffle(pool).slice(0,count);
+      // Keep the selected level visible throughout the round; built-in question banks are bundled offline.
+      gameTopic=topic;idx=0;answered=false;turn=0;gameActive=true;
+      let n=mode==='solo'?1:+$('teamCount').value;
+      teams=Array.from({length:n},(_,i)=>({name:mode==='solo'?'Solo Player':`Team ${String.fromCharCode(65+i)}`,score:0,icon:mode==='solo'?'🧠':['🔴','🔵','🟢','🟣','🟠','🟡','⚫','⚪'][i]}));
+      msg.className='notice status-success';
+      msg.textContent=`✅ ${gameQs.length} question(s) ready! Starting your ${mode==='solo'?'Solo Challenge':'Team Showdown'}…`;
+      $('prepTitle').textContent='Questions are ready!'; $('prepCopy').textContent='Your game is starting now. Good luck!'; $('prepStatus').textContent='✅ Game started successfully!';
+      $('preparingOverlay').classList.add('hidden');
+      $('setupView').classList.add('hidden');
+      $('resultView').classList.add('hidden');
+      $('gameView').classList.remove('hidden');
+      renderQuestion();
+    }catch(error){
+      $('preparingOverlay').classList.add('hidden');
+      showSetup('❌ The game could not start. Please refresh the page and try again.');
+      console.error(error);
+    }finally{
+      button.disabled=false;
+      button.textContent='🚀 START THE GAME';
+    }
+  },650);
+});
+function renderScores(){ $('scoreboard').innerHTML=teams.map((t,i)=>`<div class="scorebox"><span>${t.icon} ${mode==='solo'?'Your score':t.name}${mode==='team'&&i===turn?' • UP NEXT':''}</span><strong>${t.score} pts</strong></div>`).join('') }
+function renderQuestion(){clearInterval(timerInterval);timeLeft=60;answered=false;let q=gameQs[idx];$('levelBadge').textContent=({'easy':'🟢 EASY','moderate':'🟡 MODERATE','tough':'🔴 TOUGH'})[$('level').value];$('timer').textContent='⌛ 01:00';$('timer').style.borderColor='';$('gameTopic').textContent=labels[gameTopic]||'Quiz Topic';$('questionNum').textContent=`QUESTION ${idx+1} / ${gameQs.length}`;$('progressBar').style.width=`${idx/gameQs.length*100}%`;$('questionText').textContent=q.q;$('feedback').classList.add('hidden');$('nextQuestion').classList.add('hidden');renderScores();$('options').innerHTML=q.opts.map((o,i)=>`<button class="option" data-i="${i}"><span class="letter">${'ABCD'[i]}</span><span>${escapeHtml(o)}</span></button>`).join('');document.querySelectorAll('.option').forEach(b=>b.addEventListener('click',()=>chooseAnswer(+b.dataset.i)));if(mode==='team'&&$('turnStyle').value==='buzz')$('feedback').textContent='Open buzzer mode: choose an answer as a group, then pass to the next team.';timerInterval=setInterval(()=>{if(answered){clearInterval(timerInterval);return}timeLeft--;let mm=String(Math.floor(timeLeft/60)).padStart(2,'0'),ss=String(timeLeft%60).padStart(2,'0');$('timer').textContent=`⌛ ${mm}:${ss}`;if(timeLeft<=10)$('timer').style.borderColor='var(--red)';if(timeLeft<=0){clearInterval(timerInterval);timeExpired()}},1000)}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function chooseAnswer(choice){if(answered)return;clearInterval(timerInterval);answered=true;let q=gameQs[idx],ok=choice===q.correct;if(ok)teams[turn].score+=10;document.querySelectorAll('.option').forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add('correct');else if(i===choice)b.classList.add('wrong')});$('feedback').innerHTML=`<strong style="color:${ok?'var(--green)':'var(--red)'}">${ok?'🎉 Correct! +10 points':'Not quite!'} </strong><br><strong>Answer: ${escapeHtml(q.opts[q.correct])}</strong><br>${escapeHtml(q.explain||`This is the correct answer.`)}<br><span style="color:var(--muted)">${escapeHtml(teams[turn].name)} ${ok?'earned 10 points!':'gets 0 points this turn.'}</span>`;$('feedback').classList.remove('hidden');$('progressBar').style.width=`${(idx+1)/gameQs.length*100}%`;$('nextQuestion').textContent=idx===gameQs.length-1?'🏆 See the results':'Next question ➜';$('nextQuestion').classList.remove('hidden');renderScores()}
+function timeExpired(){if(answered)return;answered=true;const q=gameQs[idx];document.querySelectorAll('.option').forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add('correct')});$('feedback').innerHTML=`<strong style="color:var(--yellow)">⌛ Time’s up!</strong><br><strong>Answer: ${escapeHtml(q.opts[q.correct])}</strong><br>${escapeHtml(q.explain||'That is the correct answer. Review it and try again next time.')}<br><span>No points this turn — keep going!</span>`;$('feedback').classList.remove('hidden');$('nextQuestion').textContent=idx===gameQs.length-1?'🏆 See the results':'Next question ➜';$('nextQuestion').classList.remove('hidden')}
+$('nextQuestion').addEventListener('click',()=>{if(!answered)return;if(idx===gameQs.length-1){finishGame();return}idx++;if(mode==='team'&&$('turnStyle').value==='round')turn=(turn+1)%teams.length;else if(mode==='team')turn=(turn+1)%teams.length;renderQuestion()});
+function finishGame(){clearInterval(timerInterval);gameActive=false;$('gameView').classList.add('hidden');$('resultView').classList.remove('hidden');let sorted=[...teams].sort((a,b)=>b.score-a.score),tie=sorted.length>1&&sorted[0].score===sorted[1].score;$('trophy').textContent=tie?'🤝':'🏆';$('winnerName').textContent=tie?'It’s a tie!':`${sorted[0].name} wins!`;$('winnerMessage').textContent=tie?'What a close match! Everyone brought their best.':mode==='solo'?'Challenge complete! You showed up and played — that’s a win.':'Fantastic teamwork! Give the champions a huge cheer!';$('finalStats').innerHTML=`<div class="scorebox"><span>Questions played</span><strong>${gameQs.length}</strong></div><div class="scorebox"><span>Top score</span><strong>${sorted[0].score} pts</strong></div><div class="scorebox"><span>Points per correct answer</span><strong>10</strong></div>`;$('leaderboard').innerHTML=sorted.map((t,i)=>`<div class="rankrow"><div class="rank">${['🥇','🥈','🥉'][i]||`#${i+1}`}</div><div class="rankname">${t.icon} ${t.name}${i===0&&!tie?' 👑':''}</div><div class="points">${t.score} pts</div></div>`).join('');if(!tie)confetti()}
+function confetti(){let colors=['#ff4f9a','#4de5e0','#ffd166','#75f0a4','#9d8cff'];for(let i=0;i<90;i++){let el=document.createElement('i');el.className='confetti';el.style.left=Math.random()*100+'vw';el.style.background=colors[i%colors.length];el.style.animationDelay=Math.random()*1.1+'s';el.style.transform=`rotate(${Math.random()*180}deg)`;document.body.appendChild(el);setTimeout(()=>el.remove(),4000)}}
+$('quitGame').addEventListener('click',()=>{if(confirm('End this game and return to setup?')){clearInterval(timerInterval);$('gameView').classList.add('hidden');$('setupView').classList.remove('hidden');$('preparingOverlay').classList.add('hidden');gameActive=false}});$('playAgain').addEventListener('click',()=>{$('resultView').classList.add('hidden');$('setupView').classList.remove('hidden');$('startGame').click()});$('newSetup').addEventListener('click',()=>{$('resultView').classList.add('hidden');$('setupView').classList.remove('hidden')});
+
+// AI-powered start handler: questions are generated for any topic by the server.
+const oldStart=$('startGame'); const freshStart=oldStart.cloneNode(true); oldStart.parentNode.replaceChild(freshStart,oldStart);
+freshStart.addEventListener('click', async ()=>{
+ if(freshStart.disabled)return;
+ const topic=$('topic').value.trim();
+ const count=Number($('count').value);
+ const level=$('level').value;
+ if(!topic){showSetup('❌ Type any topic first (for example, robotics, football, or Indian history).');$('topic').focus();return;}
+ if(!Number.isInteger(count)||count<1||count>100){showSetup('❌ Choose a whole number from 1 to 100.');$('count').focus();return;}
+ freshStart.disabled=true;freshStart.innerHTML='<span class="loading-dot"></span> PREPARING QUESTIONS…';
+ $('setupMessage').className='notice status-loading';$('setupMessage').innerHTML='<span class="loading-dot"></span><strong>AI is preparing your quiz…</strong><br>Questions will match your chosen topic.';$('setupMessage').classList.remove('hidden');
+ $('preparingOverlay').classList.remove('hidden');$('preparingOverlay').classList.remove('prep-failed');
+ $('prepTitle').textContent='Preparing your quiz…';$('prepCopy').textContent=`Topic: ${topic} • Level: ${level} • ${count} question(s)`;$('prepStatus').textContent='⏳ Connecting to the quiz generator…';
+ let statusTimer=setTimeout(()=>{$('prepStatus').textContent='🧠 Creating topic-specific questions and four answer choices…';},900);
+ try{
+  const controller=new AbortController(); const timeout=setTimeout(()=>controller.abort(),100000);
+  let response;
+  try { response=await fetch('/api/generate-quiz',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topic,count,level}),signal:controller.signal}); }
+  finally {clearTimeout(timeout);}
+  const data=await response.json().catch(()=>({error:'The server returned an unreadable response.'}));
+  if(!response.ok)throw new Error(data.error||`Question generation failed (HTTP ${response.status}).`);
+  if(!Array.isArray(data.questions)||data.questions.length<count)throw new Error('The generator did not return enough valid questions. Please try again or choose fewer questions.');
+  gameQs=data.questions.slice(0,count).map(q=>({category:'custom',q:String(q.q),opts:q.opts.map(String),correct:Number(q.correct),explain:String(q.explain||'Review the explanation and try another question.')}));
+  if(gameQs.some(q=>!q.q||q.opts.length!==4||!Number.isInteger(q.correct)||q.correct<0||q.correct>3))throw new Error('Some generated questions were not in the right format. Please try again.');
+  $('prepStatus').textContent='✅ Questions ready! Starting your game…';
+  gameTopic='custom';labels.custom='✨ '+topic;idx=0;answered=false;turn=0;gameActive=true;
+  const n=mode==='solo'?1:+$('teamCount').value;
+  teams=Array.from({length:n},(_,i)=>({name:mode==='solo'?'Solo Player':`Team ${String.fromCharCode(65+i)}`,score:0,icon:mode==='solo'?'🧠':['🔴','🔵','🟢','🟣','🟠','🟡','⚫','⚪'][i]}));
+  await new Promise(resolve=>setTimeout(resolve,350));
+  $('preparingOverlay').classList.add('hidden');$('setupView').classList.add('hidden');$('resultView').classList.add('hidden');$('gameView').classList.remove('hidden');renderQuestion();
+ }catch(e){
+  $('preparingOverlay').classList.add('prep-failed');$('prepTitle').textContent='Could not prepare the quiz';$('prepCopy').textContent='The game needs the Quiz Arena server and a working AI API connection.';
+  const message=e.name==='AbortError'?'The request took too long. Check your connection and try again.':e.message;
+  $('prepStatus').textContent='❌ '+message;
+  showSetup('❌ '+message+' Open the project README to set up the AI server.');
+  console.error(e);
+  setTimeout(()=>$('preparingOverlay').classList.add('hidden'),4500);
+ }finally{clearTimeout(statusTimer);freshStart.disabled=false;freshStart.textContent='🚀 START THE GAME';}
+});
+</script></body></html>
