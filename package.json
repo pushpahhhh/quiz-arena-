@@ -4,7 +4,7 @@
   "private": true,
   "description": "Quiz Arena with secure OpenAI question generation",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server_1.js"
   },
   "engines": {
     "node": ">=20"
